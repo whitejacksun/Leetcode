@@ -1,5 +1,5 @@
 **206. Reverse Linked List**
-'''java
+```java
 public ListNode reverseList(ListNode head) {
     if (head == null || head.next == null) {
         return head;
@@ -10,4 +10,4 @@ public ListNode reverseList(ListNode head) {
     head.next = null;
     return newHead;
 }
-'''
+```
