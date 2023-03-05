@@ -64,31 +64,22 @@ Return the head of the merged linked list.
 ```java
 class Solution {
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-    ListNode res = new ListNode(0); // 创建一个新的节点作为结果链表的头节点
-    ListNode curr = res; // 使用一个指针来遍历结果链表
-
-    while(list1 != null && list2 != null){
-        if(list1.val < list2.val){ // 比较两个链表节点的值，将小的节点链接到结果链表后面
-            curr.next = list1;
-            list1 = list1.next; // 将链表1的指针向后移动一位
+        ListNode res = new ListNode();
+        ListNode curr = res;
+        while(list1 != null && list2 != null){
+            if(list1.val < list2.val){
+                curr.next = list1;
+                list1 = list1.next;
+            }
+            else{
+                curr.next = list2;
+                list2 = list2.next;
+            }
+            curr = curr.next;
         }
-        else{
-            curr.next = list2;
-            list2 = list2.next; // 将链表2的指针向后移动一位
-        }
-        curr = curr.next; // 将结果链表的指针向后移动一位
+        curr.next =  list1 == null?list2:list1;
+        return res.next;
     }
-
-    // 处理剩余的节点
-    if(list1 != null){
-        curr.next = list1;
-    }
-    else if(list2 != null){
-        curr.next = list2;
-    }
-
-    return res.next; // 返回结果链表的第一个有效节点
-}
 }
 ```
 
