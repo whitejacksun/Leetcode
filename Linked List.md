@@ -4,36 +4,37 @@
 
 ***206. Reverse Linked List***
 
-Given the head of a singly linked list, reverse the list, and return the reversed list.
+Given the ```head``` of a singly linked list, reverse the list, and return the reversed list.
 
-**迭代解法：**
+**递归解法：**
 ```java
-public ListNode reverseList(ListNode head) {
-    if (head == null || head.next == null) {
-        return head;
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null)return head;
+        ListNode res = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return res;
     }
-    ListNode next = head.next;
-    ListNode newHead = reverseList(next);
-    next.next = head;
-    head.next = null;
-    return newHead;
 }
 ```
 主要思路如下：
 
 检查链表头是否为空或只有一个节点，如果是，则直接返回头节点。
 
-如果链表有两个或更多节点，递归调用reverseList函数，将头节点的下一个节点作为参数传递给它。此时，newHead变量将保存原链表的尾部节点，即反转后链表的头部节点。
+如果链表有两个或更多节点，递归调用reverseList函数，将头节点的下一个节点作为参数传递给它。
 
-将头节点的下一个节点next的next指针指向头节点head，这将把头节点和下一个节点反转过来。
+进行迭代，当符合停止条件时，即```（head.next) == null ||（head.next).next == null```此时head位于倒数第二个节点
 
-将头节点head的next指针设置为空，断开原来的链接。
+将head的下一个节点的next指针指向头节点head。
 
-返回新的头节点newHead
+将head的next指针设置为空，断开原来的链接。
+
+一步步归来，res从倒数第二个逐渐回到原始的头节点。
 
 通过递归调用实现链表翻转的主要思路是不断将链表分成前半段和后半段，对后半段进行翻转，然后再将前半段与翻转后的后半段连接起来。这种递归思想在链表操作中很常见，也是链表操作中比较优秀的解法之一。
 
-**递归解法：**
+**迭代解法：**
 ```java
 class Solution {
     public ListNode reverseList(ListNode head) {
@@ -51,3 +52,66 @@ class Solution {
 }
 ```
 
+***21. Merge Two Sorted Lists***
+
+You are given the ```heads``` of two **sorted** linked lists list1 and list2.
+
+Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Return the head of the merged linked list.
+
+**迭代：**
+```java
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    ListNode res = new ListNode(0); // 创建一个新的节点作为结果链表的头节点
+    ListNode curr = res; // 使用一个指针来遍历结果链表
+
+    while(list1 != null && list2 != null){
+        if(list1.val < list2.val){ // 比较两个链表节点的值，将小的节点链接到结果链表后面
+            curr.next = list1;
+            list1 = list1.next; // 将链表1的指针向后移动一位
+        }
+        else{
+            curr.next = list2;
+            list2 = list2.next; // 将链表2的指针向后移动一位
+        }
+        curr = curr.next; // 将结果链表的指针向后移动一位
+    }
+
+    // 处理剩余的节点
+    if(list1 != null){
+        curr.next = list1;
+    }
+    else if(list2 != null){
+        curr.next = list2;
+    }
+
+    return res.next; // 返回结果链表的第一个有效节点
+}
+}
+```
+
+***83. Remove Duplicates from Sorted List***
+
+Given the ```head``` of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list **sorted** as well.
+
+**递归：**
+```java
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode curr = head;
+        while(curr.next != null){
+            if(curr.val == curr.next.val){
+                curr.next = curr.next.next;
+            }
+            else{
+                curr = curr.next;
+            }
+        }
+        return head;
+    }
+}
+```
+递归解法比较通俗易懂。
