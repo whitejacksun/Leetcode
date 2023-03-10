@@ -167,3 +167,29 @@ class Solution {
     }
 }
 ```
+
+***24. Swap Nodes in Pairs***
+
+Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
+
+因为是两两成对进行swap，因此swap之后，pair中靠后的那个节点的next也需要改变（因为下一个pair也变了），因此使用dummy node方便改变。需要注意的是swap之后两个节点的顺序已经变了，因此是curr = slow，因为slow是改变后靠后的那个节点。
+
+```java
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode pummy = new ListNode(-1);
+        pummy.next = head;
+        ListNode curr = pummy;
+        while(curr.next != null && curr.next.next != null){
+            ListNode slow = curr.next;
+            ListNode fast = curr.next.next;
+            slow.next = fast.next;
+            fast.next = slow;
+            curr.next = fast;
+
+            curr = slow;
+        }
+        return pummy.next;
+    }
+}
+```
