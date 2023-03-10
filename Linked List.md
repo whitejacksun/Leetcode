@@ -193,3 +193,52 @@ class Solution {
     }
 }
 ```
+
+***234. Palindrome Linked List***
+
+Given the ```head``` of a singly linked list, return ```true``` if it is a palindrome or ```false``` otherwise.
+
+暴力&蠢解法: 时间和空间都在out的边缘
+
+```java
+class Solution {
+    public ListNode reverse(ListNode head){
+        if(head == null || head.next == null)return head;
+        ListNode res = reverse(head.next);
+        head.next.next = head;
+        head.next = null;
+        return res;
+    }
+
+    
+    public ListNode copy(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        ListNode copyHead = new ListNode(head.val);
+        ListNode copyNode = copyHead;
+        ListNode originalNode = head.next;
+        while (originalNode != null) {
+            ListNode newNode = new ListNode(originalNode.val);
+            copyNode.next = newNode;
+            copyNode = copyNode.next;
+            originalNode = originalNode.next;
+        }
+        return copyHead;
+    }
+
+
+    public boolean isPalindrome(ListNode head) {
+        ListNode copy = copy(head);       
+        ListNode re = reverse(head);
+        while (copy != null && copy.next != null){
+            if(copy.val != re.val) {return false;}
+            else{
+                re = re.next;
+                copy = copy.next;
+            }
+        }
+        return true;
+    }
+}
+```
