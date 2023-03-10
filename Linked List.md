@@ -198,7 +198,7 @@ class Solution {
 
 Given the ```head``` of a singly linked list, return ```true``` if it is a palindrome or ```false``` otherwise.
 
-暴力&蠢解法: 时间和空间都在out的边缘
+暴力&蠢 解法: 时间和空间都在out的边缘。先复制一份链表，然后将原链表倒置与复制的比较。（因为倒置过程中会把原列表改变，[1,2,3,2,1]会变成[1,null]）
 
 ```java
 class Solution {
