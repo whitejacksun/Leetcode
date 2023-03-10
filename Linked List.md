@@ -129,3 +129,41 @@ class Solution {
     }
 }
 ```
+
+***445. Add Two Numbers II***
+
+You are given two **non-empty** linked lists representing two non-negative integers. The most significant digit comes first and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+难点是需要进位，并且是给自己的prev节点进位。因此选择将两个链表倒置方便求和。记得最后return的时候要倒置回去。
+
+```java
+class Solution {
+    public ListNode reverse(ListNode head){
+        if(head == null || head.next == null)return head;
+        ListNode newhead = reverse(head.next);
+        head.next.next = head;
+        head.next = null;
+        return newhead;
+    }
+    
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode curr1 = reverse(l1);
+        ListNode curr2 = reverse(l2);
+        ListNode res = new ListNode(0);
+        ListNode dummy = res; 
+        boolean flag = false;
+        while(curr1 != null || curr2 != null){
+            int sum = (curr1 != null ? curr1.val : 0) + (curr2 != null ? curr2.val : 0) + (flag ? 1 : 0);
+            res.next = new ListNode(sum % 10);
+            flag = sum >= 10;
+            res = res.next;
+            curr1 = curr1 != null ? curr1.next : null;
+            curr2 = curr2 != null ? curr2.next : null;
+        }
+        if (flag) res.next = new ListNode(1); 
+        return reverse(dummy.next);
+    }
+}
+```
