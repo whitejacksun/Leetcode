@@ -52,6 +52,28 @@ class Solution {
 }
 ```
 
+**头插法(Head Insertion)** python
+```python
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        newhead = ListNode(-1)
+        while head:
+            next = head.next
+            head.next = newhead.next
+            newhead.next = head
+            head = next
+        return newhead.next
+```
+
 ***21. Merge Two Sorted Lists***
 
 You are given the ```heads``` of two **sorted** linked lists list1 and list2.
